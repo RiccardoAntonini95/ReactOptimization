@@ -1,4 +1,4 @@
-import { useState, memo, useCallback, useMemo } from 'react';
+import { useState, memo, useCallback, useMemo, useEffect } from 'react';
 
 import IconButton from '../UI/IconButton.jsx';
 import MinusIcon from '../UI/Icons/MinusIcon.jsx';
@@ -56,6 +56,13 @@ const Counter =  memo (function Counter({ initialCount }) {
     //setCounter((prevCounter) => prevCounter + 1);
     setCounterChanges((prevCounterChanges) => [{value: 1, id: Math.random() * 1000}, ...prevCounterChanges]);
   }, [])
+
+ 
+/* Non necessario, risolto con key su app.jsx
+
+  useEffect(() => {
+    setCounterChanges([{value: initialCount, id: Math.random() * 1000}]);
+  }, [initialCount]) */
 
   return (
     <section className="counter">

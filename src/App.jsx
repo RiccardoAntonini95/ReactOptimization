@@ -19,7 +19,9 @@ function App() {
       <Header />
       <main>
         <ConfigureCounter onSet={handleSetCount} />
-        <Counter initialCount={chosenCount} />
+        {/*usando la key posso resettare il valore del counter perchè react lo smonta e ne crea uno nuovo al cambiare di chosenCount, così non è necessario
+        resettare il valore all'interno con lo useEffect*/}
+        <Counter key={chosenCount} initialCount={chosenCount} /> 
       </main>
     </>
   );
