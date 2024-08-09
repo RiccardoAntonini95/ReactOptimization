@@ -1,4 +1,4 @@
-import { useState, memo } from 'react';
+import { useState, memo, useCallback, useMemo } from 'react';
 
 import IconButton from '../UI/IconButton.jsx';
 import MinusIcon from '../UI/Icons/MinusIcon.jsx';
@@ -31,17 +31,22 @@ function isPrime(number) {
 //ora che ho cambiato la struttura dei componenti e al cambio dello state non è più coinvolta App.jsx non servirebbe più ma la lascio qui per esercizio
 const Counter =  memo (function Counter({ initialCount }) {
   log('<Counter /> rendered', 1);
-  const initialCountIsPrime = isPrime(initialCount);
+
+  //useMemo a differenza di memo è per le funzioni normali, non per i component, fa si che questa funzione si esegua solo se cambia il valore di
+  //ciò che sta nell'array di dependency, quindi a noi interessa quando cambia initialCount perchè solo allora cambiera il valore di ciò che torna la funzione
+  //altrimenti si sarebbe rieseguita ad ogni re-render di questo component
+  const initialCountIsPrime = useMemo(() => isPrime(initialCount), [initialCount]);
 
   const [counter, setCounter] = useState(initialCount);
 
-  function handleDecrement() {
+  //grazie a useCallback prevengo che questa funzione venga ricreata ad ogni esecuzione di questo component, così memo su IconButton funzionerà visto che le prop non cambieranno
+  const handleDecrement = useCallback(function handleDecrement() {
     setCounter((prevCounter) => prevCounter - 1);
-  }
+  }, [])
 
-  function handleIncrement() {
+   const handleIncrement = useCallback (function handleIncrement() {
     setCounter((prevCounter) => prevCounter + 1);
-  }
+  }, [])
 
   return (
     <section className="counter">
