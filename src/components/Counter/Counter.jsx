@@ -27,6 +27,8 @@ function isPrime(number) {
   return true;
 }
 
+//memo come wrapper della funziona fa si che venga ri-eseguita solo se la prop che riceve cambia rispetto a prima
+//ora che ho cambiato la struttura dei componenti e al cambio dello state non è più coinvolta App.jsx non servirebbe più ma la lascio qui per esercizio
 const Counter =  memo (function Counter({ initialCount }) {
   log('<Counter /> rendered', 1);
   const initialCountIsPrime = isPrime(initialCount);
